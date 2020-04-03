@@ -47,6 +47,95 @@
         font-size: 30px;
         border: 1px solid #dee2e6;
       }
+        body {
+        font-family: "Open Sans", "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.5em;
+        font-weight: 400;
+      }
+
+      p,
+      span,
+      a,
+      ul,
+      li,
+      button {
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+      }
+
+      strong {
+        font-weight: 600;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Open Sans", "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.5em;
+        font-weight: 300;
+      }
+
+      strong {
+        font-weight: 400;
+      }
+
+      .tile {
+        width: 100%;
+        display: inline-block;
+        box-sizing: border-box;
+        background: #fff;
+        padding: 20px;
+        margin-bottom: 10px;
+      }
+      .tile .title {
+        margin-top: 0px;
+      }
+      .tile.purple, .tile.blue, .tile.red, .tile.orange, .tile.green {
+        color: #fff;
+      }
+      .tile.purple {
+        background: #5133ab;
+      }
+      .tile.purple:hover {
+        background: #3e2784;
+      }
+      .tile.red {
+        background: #ac193d;
+      }
+      .tile.red:hover {
+        background: #7f132d;
+      }
+      .tile.green {
+        background: #00a600;
+      }
+      .tile.green:hover {
+        background: #007300;
+      }
+      .tile.blue {
+        background: #2672ec;
+      }
+      .tile.blue:hover {
+        background: #125acd;
+      }
+      .tile.orange {
+        background: #dc572e;
+      }
+      .tile.orange:hover {
+        background: #b8431f;
+      }
+
+      .number-cell {
+        width: 100%;
+        height: 100%;
+        border-radius: 10%;
+      }
+      
     </style> 
   </head>
   <body>
@@ -77,6 +166,34 @@
     </nav>
     <div class="container">
       <div id="firebaseui-auth-container"></div>
+      <div class="center-screen">
+        <div class="row">
+          <div class="col-6">
+              <div class="tile purple">
+                <h3 class="title">Number Game</h3>
+                <p>Short, sweet data point goes here.</p>
+              </div>
+          </div>
+          <div class="col-6 ">
+              <div class="tile orange" id="game2" onclick="launchMemorizeGame()">
+                <h3 class="title">Memorize</h3>
+                <p>Short, sweet data point goes here.</p>
+              </div>
+          </div>
+          <div class="col-6">
+              <div class="tile green">
+                <h3 class="title">Green Tile</h3>
+                <p>Short, sweet data point goes here.</p>
+              </div>
+          </div>
+          <div class="col-6">
+              <div class="tile green">
+                <h3 class="title">Blue Tile</h3>
+                <p>Short, sweet data point goes here.</p>
+              </div>
+          </div>
+        </div>
+      </div>
       <div id="preferences">
         <form id="gamePrefs">
           <div class="form-group">
@@ -93,19 +210,24 @@
       <div id="gameBoard">
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
-            <h1 class="display-4">Number Challenge</h1>
-            <p class="lead">Ghar par baithe logon ke liye</p>
+            <h1 class="display-4" id="game-title">Number Challenge</h1>
+            <p class="lead" id="game-short-desc">Ghar par baithe logon ke liye</p>
           </div>
         </div>
           <div id="score">
               <p id="a">Time Elapsed : <span id="time">0.000</span></p>
-              <p >Next Number : <span id="curr">1</span></p>
+              <p >Select : <span id="curr">1</span></p>
           </div>
           <div id="tableContent">
-              <table class="table">
+              <table class="table" id="table1">
                   <tbody>
 
                   </tbody>
+              </table>
+              <table class="table" id="tableId">
+                <tbody>
+
+                </tbody>
               </table>
           </div>
 
@@ -139,7 +261,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <script src="./js/numberMemoryTest.js"></script>
     <script>
       var imageMap = {
                 Ashish: "",
@@ -184,8 +306,7 @@
             $('#myModal').on('hidden.bs.modal', function (e) {
               reset();
             })
-            //constructTable();
-            
+
             //k=onclick=function(){k?(S=new Date,T=setInterval("a.innerHTML=(new Date-S)/1e3")):clearInterval(T);k=!k}
             $('.cellImage').click(function() {
                 //console.log("Clicked");
@@ -214,8 +335,16 @@
             });
         });
 
+        function launchMemorizeGame() {
+          console.log("Div Clicked");
+          $('#gameBoard').show();
+          getNextNumber();
+          constructMemoryTestTable(7);
+          presentDigitsToUser();
+      }
+
         function constructTable() {
-            $("table tbody").empty();
+            $("#table1 tbody").empty();
             //var keys = Object.keys(imageMap);
             shuffleArray(arr);
             //console.log(keys);
@@ -228,7 +357,7 @@
                     
                 }
                 row += "/tr"; 
-                $("table tbody").append(row);
+                $("#table1 tbody").append(row);
             }
 
         }
