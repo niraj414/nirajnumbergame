@@ -6,6 +6,7 @@ var currIndex = 0;
 var currLevel = 3;
 var currNumber;
 var next;
+var numFaults = 3;
 
 var levelTitleMap = {
     3:"Well Done!",
@@ -16,6 +17,13 @@ var levelTitleMap = {
     8:"You're a pro",
     9:"That's it. You did it"
 }
+
+var faultMessages = [
+    "Oh Snap! You hit too many wrong Cells. Better luck next time.",
+    "Only if you had infinite number of chances. You'll do it next time.",
+    "Pro Tip: Try to create a pattern and remember that. You can do it.",
+    "Oh oh! Looks like you are hitting a little too many wrong cells."
+];
 
 
 function initializeGameBoard() {
@@ -116,10 +124,20 @@ function handleCellClick(cell) {
         } else {
             currIndex++;
         }
-    } 
+    } else {
+        if(--numFaults == 0) {
+            finishGame(getFaultsMessage());
+        } 
+    }
+}
+
+function getFaultsMessage() {
+    var s = faultMessages.length;
+    return faultMessages[Math.floor(Math.random() * s)];
 }
 
 function resetTableContent() {
+    numFaults = 3;
     unBlankTable();
     $("#tableId tbody tr td div").empty(); 
     getNextNumber();
@@ -180,4 +198,15 @@ function resetMemorizeGame() {
 
 function MemorizeGamePrefHandler() {
     console.log("Memorize game preference");
+}
+
+function finishGame(userMsg) {
+    var finishGameModal = {};
+    finishGameModal["title"] = "Hard Luck"
+    finishGameModal["body"] = userMsg;
+     launchModal(finishGameModal);
+
+     $('#myModal').on('hidden.bs.modal', function (e) {
+        resetTableContent();
+      })
 }
