@@ -23,7 +23,7 @@
     <script defer src="/__/firebase/init.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-
+    <link type="text/css" rel="stylesheet" href="./css/app.css" />
     <style media="screen">
       body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
       #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
@@ -38,105 +38,6 @@
         body { border-top: 16px solid #ffa100; }
       }
     </style>
-    <style>
-      .table td {
-        width: 40px;
-        height: 40px;
-        padding: 5px;
-        text-align: center;
-        font-size: 30px;
-        border: 1px solid #dee2e6;
-      }
-        body {
-        font-family: "Open Sans", "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-        font-size: 14px;
-        line-height: 1.5em;
-        font-weight: 400;
-      }
-
-      p,
-      span,
-      a,
-      ul,
-      li,
-      button {
-        font-family: inherit;
-        font-size: inherit;
-        font-weight: inherit;
-        line-height: inherit;
-      }
-
-      strong {
-        font-weight: 600;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-family: "Open Sans", "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-        line-height: 1.5em;
-        font-weight: 300;
-      }
-
-      strong {
-        font-weight: 400;
-      }
-
-      .tile {
-        width: 100%;
-        display: inline-block;
-        box-sizing: border-box;
-        background: #fff;
-        padding: 20px;
-        margin-bottom: 10px;
-      }
-      .tile .title {
-        margin-top: 0px;
-      }
-      .tile.purple, .tile.blue, .tile.red, .tile.orange, .tile.green {
-        color: #fff;
-      }
-      .tile.purple {
-        background: #5133ab;
-      }
-      .tile.purple:hover {
-        background: #3e2784;
-      }
-      .tile.red {
-        background: #ac193d;
-      }
-      .tile.red:hover {
-        background: #7f132d;
-      }
-      .tile.green {
-        background: #00a600;
-      }
-      .tile.green:hover {
-        background: #007300;
-      }
-      .tile.blue {
-        background: #2672ec;
-      }
-      .tile.blue:hover {
-        background: #125acd;
-      }
-      .tile.orange {
-        background: #dc572e;
-      }
-      .tile.orange:hover {
-        background: #b8431f;
-      }
-
-      .number-cell {
-        width: 100%;
-        height: 100%;
-        border-radius: 10%;
-      }
-      
-    </style> 
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -166,58 +67,26 @@
     </nav>
     <div class="container">
       <div id="firebaseui-auth-container"></div>
-      <div class="center-screen">
-        <div class="row">
-          <div class="col-6">
-              <div class="tile purple">
-                <h3 class="title">Number Game</h3>
-                <p>Short, sweet data point goes here.</p>
-              </div>
-          </div>
-          <div class="col-6 ">
-              <div class="tile orange" id="game2" onclick="launchMemorizeGame()">
-                <h3 class="title">Memorize</h3>
-                <p>Short, sweet data point goes here.</p>
-              </div>
-          </div>
-          <div class="col-6">
-              <div class="tile green">
-                <h3 class="title">Green Tile</h3>
-                <p>Short, sweet data point goes here.</p>
-              </div>
-          </div>
-          <div class="col-6">
-              <div class="tile green">
-                <h3 class="title">Blue Tile</h3>
-                <p>Short, sweet data point goes here.</p>
-              </div>
-          </div>
+      <div class="vertical-center">
+        <div class="row" id="gameSelection">
+          
         </div>
       </div>
       <div id="preferences">
-        <form id="gamePrefs">
-          <div class="form-group">
-            <label for="playerName">Nick Name</label>
-            <input required class="form-control" id="playerName" aria-describedby="emailHelp" placeholder="Enter nick name">
-          </div>
-          <div class="form-group">
-            <label for="ShuffleSpeed">Shuffle Speed</label>
-            <input type="range" class="custom-range" min="0" max="6" step="1" id="ShuffleSpeed">
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
       </div>
       <div id="gameBoard">
-        <div class="jumbotron jumbotron-fluid">
+        <div class="jumbotron jumbotron-fluid" id="gameBoardHeader">
           <div class="container">
-            <h1 class="display-4" id="game-title">Number Challenge</h1>
-            <p class="lead" id="game-short-desc">Ghar par baithe logon ke liye</p>
+            <h1 class="display-4" id="game-title"></h1>
+            <p class="lead" id="game-short-desc"></p>
           </div>
         </div>
-          <div id="score">
-              <p id="a">Time Elapsed : <span id="time">0.000</span></p>
-              <p >Select : <span id="curr">1</span></p>
-          </div>
+        <div class="alert alert-primary" role="alert">
+            <div id="score">
+                <p id="a">Time Elapsed : <span id="time">0.000</span></p>
+                <p >Select : <span id="curr">1</span></p>
+            </div>
+        </div>
           <div id="tableContent">
               <table class="table" id="table1">
                   <tbody>
@@ -230,11 +99,8 @@
                 </tbody>
               </table>
           </div>
-
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="reset">Reset</button>
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="changePrefs">Preferences</button>
-
-          <div class="modal" tabindex="-1" role="dialog" id="myModal">
+          <div id="actionArea"></div>
+          <div class="modal vertical-center" tabindex="-1" role="dialog" id="myModal">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -263,27 +129,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="./js/CommonUtils.js"></script>
     <script src="./js/numberMemoryTest.js"></script>
+    <script src="./js/numberClickGame.js"></script>
     <script>
-      var imageMap = {
-                Ashish: "",
-                Niraj: "",
-                Durgesh: "",
-                Ravi: "",
-                Bubu: "",
-                Aditya: "",
-                Roshan: "",
-                Rohit: ""
-            };
-        var arr= [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25];
-        var currNum = 1;
-        var interval = 2000;
-        var tableShuffle, timer;
         // Initialize the FirebaseUI Widget using Firebase.
         var authUi;
         var currentUser;
-        var score;
         $(document).ready(function() {
             //launchAuthUI();
+
+            showGameSelectionTiles();
             InitApp();
 
             $('#login').click(() => {
@@ -291,22 +145,15 @@
             });
             
             $('#gameBoard').hide();
-            const form = document.getElementById('gamePrefs');
-            form.addEventListener('submit', startGame);
+            
 
-            $('#reset').click(function() {
-                reset();
-            });
-
-            $('#changePrefs').click(function() {
-                changePreferences();
-            });
+            
 
             $('#publish').click(publishScore);
 
-            $('#myModal').on('hidden.bs.modal', function (e) {
+            /*$('#myModal').on('hidden.bs.modal', function (e) {
               reset();
-            })
+            })*/
 
             //k=onclick=function(){k?(S=new Date,T=setInterval("a.innerHTML=(new Date-S)/1e3")):clearInterval(T);k=!k}
             $('.cellImage').click(function() {
@@ -336,83 +183,6 @@
             });
         });
 
-        function launchMemorizeGame() {
-          console.log("Div Clicked");
-          $('#gameBoard').show();
-          getNextNumber();
-          constructMemoryTestTable(7);
-          presentDigitsToUser();
-      }
-
-        function constructTable() {
-            $("#table1 tbody").empty();
-            //var keys = Object.keys(imageMap);
-            shuffleArray(arr);
-            //console.log(keys);
-            for (var i=0; i<5; i++) {
-                var row = "<tr>";
-                for (var j=0; j<5; j++) {
-                    row += `<td>
-                                <div class="cellImage">${arr[(i*5 + j)%arr.length]}</div>
-                            </td>`
-                    
-                }
-                row += "/tr"; 
-                $("#table1 tbody").append(row);
-            }
-
-        }
-
-        function printSuccessMessage() {
-          var title = `Well done ${$('#playerName').val()}`;
-          $("#modalTitle").html(title);
-          //var message = `Bhai total time laga ${$("#time").text()}. Share karo fatafat group par.`;
-          var timeTaken = parseFloat($("#time").text());
-          var sliderVal = document.getElementById("ShuffleSpeed").value;
-          score = (1/(timeTaken)) * ((sliderVal+1)/2) * 10e5;
-          var message = `Your total score is ${Math.floor(score)}. Publish this score or play a new game.`;
-          $("#winMsg").html(message);
-          $("#myModal").modal();
-        }
-
-        /* Randomize array in-place using Durstenfeld shuffle algorithm */
-        function shuffleArray(array) {
-            for (var i = array.length - 1; i > 0; i--) {
-                var j = Math.floor(Math.random() * (i + 1));
-                var temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-            }
-        }
-
-        function reset() {
-            clearInterval(tableShuffle);
-            //tableShuffle = setInterval(constructTable, interval);
-            currNum = 1;
-            $('#curr').html(currNum);
-            clearInterval(timer);
-            $('#time').html("0.000");
-            constructTable();
-            //(S=new Date,timer=setInterval("time.innerHTML=(new Date-S)/1e3"));
-        }
-
-        function changePreferences() {
-          $('#preferences').show()
-          $('#gameBoard').hide();
-        }
-
-        function startGame() {
-          reset();
-          
-          var slider = document.getElementById("ShuffleSpeed");
-          interval = 2000 -(slider.value * 250);
-          $('#preferences').hide()
-          $('#gameBoard').show();
-          constructTable();
-          
-          event.preventDefault();
-        }
-
         function launchAuthUI() {
           authUi = new firebaseui.auth.AuthUI(firebase.auth());
 
@@ -422,7 +192,7 @@
                   // User successfully signed in.
                   // Return type determines whether we continue the redirect automatically
                   // or whether we leave that to developer to handle.
-                  changePreferences();
+                  //changePreferences();
                   console.log("Successfully signed in");
                   return false;
                 },
@@ -483,29 +253,6 @@
               shuffleSpeed: document.getElementById("ShuffleSpeed").value
           });
         }
-
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        /*try {
-          let app = firebase.app();
-          var database = firebase.database();
-          console.log(database);
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }*/
-      });
     </script>
   </body>
 </html>
