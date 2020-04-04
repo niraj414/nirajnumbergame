@@ -1,9 +1,21 @@
+
 var tableDim;
 var cellArray = [];
 var digits = [];
 var currIndex = 0;
 var currLevel = 3;
 var currNumber;
+
+var levelTitleMap = {
+    3:"Well Done!",
+    4:"",
+    5:"",
+    6:"",
+    7:"",
+    8:"",
+    9:""
+}
+
 
 function initializeGameBoard() {
 
@@ -43,6 +55,7 @@ function getNextNumber() {
 }
 
 function getDigitArray(number) {
+    currIndex = 0;
     var digits = [];
     while (number > 0) {
         digits.push(number%10);
@@ -70,6 +83,10 @@ function blankOutTable() {
     $(".number-cell").css("background-color", "#212529");
 }
 
+function unBlankTable() {
+    $(".number-cell").css("background-color", "");
+}
+
 function presentDigitsToUser() {
     placeNumberInTableCells();
     setTimeout(blankOutTable, currLevel*1000);
@@ -86,12 +103,37 @@ function handleCellClick(cell) {
     if (digit === digits[currIndex]) {
         setCellColor(cell, "");
         if (currIndex == digits.length - 1) {
-            completeCurrentLevel()
+            completeCurrentLevel();
         } else {
             currIndex++;
         }
     } 
 }
 
+function resetTableContent() {
+    unBlankTable();
+    $("#tableId tbody tr td div").empty(); 
+}
 
+function moveToNextLevel() {
+    console.log("Moving to next level");
+    currLevel++;
+    resetTableContent();
+    getNextNumber();
+    presentDigitsToUser();
+}
+
+function completeCurrentLevel() {
+    var completLevelModal = {};
+    completLevelModal["title"] = levelTitleMap[currLevel];
+    completLevelModal["body"] = "You've successfully completed this level. See if you can memorie more.";
+    var buttons = [];
+    buttons.push({
+        "id" : "nextLevelButton",
+        "title": "Next",
+        "handler": moveToNextLevel
+    });
+    completLevelModal["buttons"] = buttons;
+    launchModal(completLevelModal);
+}
 
